@@ -1,4 +1,4 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,10 @@ namespace asdasd
     internal class Bank
     {
         private long _bankBalance;
+        private long userCount;
+        private long collectorCount;
+        private long collectedMoney;
+        private long Nk;
         private List<string> _userList = new List<string>();
         private string _bankName;
         private List<string> _collectorList = new List<string>();
@@ -21,23 +25,23 @@ namespace asdasd
 
         public void AddUser()
         {
-            Console.WriteLine("Р’РІРµРґРёС‚Рµ РёРјСЏ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµСЏ Р±Р°РЅРєР°");
+            Console.WriteLine("Введите имя нового пользоватея банка");
             string user = Console.ReadLine();
 
             if (user != null)
                 _userList.Add(user);
             else
-                Console.WriteLine("РћС€РёР±РєР° РІРІРѕРґР° РёРјРµРЅРё");
+                Console.WriteLine("Ошибка ввода имени");
         }
-         public void AddCollector()
+        public void AddCollector()
         {
-            Console.WriteLine("Р’РІРµРґРёС‚Рµ РёРјСЏ РЅРѕРІРѕРіРѕ РєРѕР»Р»РµРєС‚РѕСЂР°");
+            Console.WriteLine("Введите имя нового коллектора");
             string collector = Console.ReadLine();
 
             if (collector != null)
                 _collectorList.Add(collector);
             else
-                Console.WriteLine("РћС€РёР±РєР° РІРІРѕРґР° РёРјРµРЅРё");
+                Console.WriteLine("Ошибка ввода имени");
         }
         public void AddUser(string user)
         {
@@ -49,16 +53,16 @@ namespace asdasd
         }
         public void ShowUserInfo()
         {
-            Console.WriteLine("РЎРїРёСЃРѕРє РєСЂСѓС‚С‹С… Р»СЋРґРµР№ " + _bankName + ":");
+            Console.WriteLine("Список крутых людей " + _bankName + ":");
             for (int i = 0; i < _userList.Count; i++)
             {
                 Console.WriteLine((i + 1) + ". " + _userList[i]);
             }
-        
+
         }
         public void ShowCollectorInfo()
         {
-            Console.WriteLine("РЎРїРёСЃРѕРє РѕРїР°СЃРЅС‹С… Р»СЋРґРµР№ " + _bankName + ":");
+            Console.WriteLine("Список опасных людей " + _bankName + ":");
             for (int i = 0; i < _collectorList.Count; i++)
             {
                 Console.WriteLine((i + 1) + ". " + _collectorList[i]);
@@ -69,36 +73,66 @@ namespace asdasd
         {
             if (Money <= 0)
             {
-                Console.WriteLine("РўРµР±Рµ РЅРµС‡РµРіРѕ СЃРЅРёРјР°С‚СЊ");
+                Console.WriteLine("Тебе нечего снимать");
             }
             else if (_bankBalance <= Money)
             {
-                Console.WriteLine("РЎР»РёС€РєРѕРј РјРЅРѕРіРѕ С…РѕС‡РµС€СЊ. Р‘Р°РЅРє РЅРµ РїРѕР·РІРѕР»РёС‚");
+                Console.WriteLine("Слишком много хочешь. Банк не позволит");
             }
             else
             {
                 _bankBalance -= Money;
             }
             Console.WriteLine("$$$$$$$$");
-            Console.WriteLine("РЎ Р±Р°РЅРєР° " + _bankName + " Р±С‹Р»Рѕ СЃРїРёСЃР°РЅРѕ " + Money + " РґРµРЅРµРі");
-            Console.WriteLine("Р‘Р°Р»Р°РЅСЃ Р±Р°РЅРєР°: " + _bankBalance + " РґРµРЅРµРі");
+            Console.WriteLine("С банка " + _bankName + " было списано " + Money + " денег");
+            Console.WriteLine("Баланс банка: " + _bankBalance + " денег");
             Console.WriteLine("$$$$$$$$");
         }
         public void DepositMoney(long Money)
         {
             if (Money <= 0)
             {
-                Console.WriteLine("РљРѕР»Р»РµРєС‚РѕСЂС‹ СѓР¶Рµ РІ РїСѓС‚Рё");
+                Console.WriteLine("Коллекторы уже в пути");
             }
             else
             {
                 _bankBalance += Money;
             }
             Console.WriteLine("$$$$$$$$");
-            Console.WriteLine("Р’ Р±Р°РЅРє " + _bankName + " Р±С‹Р»Рѕ РІРЅРµСЃРµРЅРѕ " + Money + " РґРµРЅРµРі");
-            Console.WriteLine("Р‘Р°Р»Р°РЅСЃ Р±Р°РЅРєР°: " + _bankBalance + " РґРµРЅРµРі");
+            Console.WriteLine("В банк " + _bankName + " было внесено " + Money + " денег");
+            Console.WriteLine("Баланс банка: " + _bankBalance + " денег");
             Console.WriteLine("$$$$$$$$");
 
         }
+        public void CollectMoneyFromUsers()
+        {
+            userCount = _userList.Count;
+            collectorCount = _collectorList.Count;
+            collectedMoney = userCount * collectorCount * 100;
+
+            _bankBalance += collectedMoney;
+
+            Console.WriteLine("$$$$$$$$");
+            Console.WriteLine("Собираем деньги");
+            Console.WriteLine("Количество пользователей: " + userCount);
+            Console.WriteLine("Количество коллекторов: " + collectorCount);
+            Console.WriteLine("Собрано денег: " + collectedMoney);
+            Console.WriteLine("Новый баланс: " + _bankBalance + " денег");
+            Console.WriteLine("$$$$$$$$");
+        }
+        public void RunAwayWithMoney()
+        {
+            _bankBalance = 0;
+            Console.WriteLine("Глава банка улетел в швейцарию. Спасибо что были с нами");
+            Console.WriteLine("Ваш баланс: " + _bankBalance);
+        }
+        public void End()
+        {
+            Console.WriteLine("Пока");
+            string collector = Console.ReadLine();
+        }
+            
+
+        
     }
 }

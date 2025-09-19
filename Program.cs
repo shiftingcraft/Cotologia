@@ -21,7 +21,11 @@ namespace asdasd
             TBank.ShowCollectorInfo();
             TBank.DepositMoney(1337);
             TBank.WithdrawMoney(1000000);
+            TBank.RunAwayWithMoney();
+            TBank.CollectMoneyFromUsers();
+            TBank.End();
+            
         }
-
+        
     }
 }
